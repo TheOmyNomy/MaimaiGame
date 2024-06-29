@@ -1,8 +1,8 @@
 ﻿using System;
+using MaimaiGame.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended;
 
 namespace MaimaiGame;
 
@@ -49,6 +49,8 @@ public class MaimaiGame : Game
 		_lastKeyboardState = Keyboard.GetState();
 
 		base.Initialize();
+
+		SceneManager.Push(new TouchScreenTestScene());
 	}
 
 	protected override void LoadContent()
@@ -66,32 +68,13 @@ public class MaimaiGame : Game
 
 		_lastKeyboardState = keyboardState;
 
+		SceneManager.Current?.OnUpdate(gameTime);
 		base.Update(gameTime);
 	}
 
 	protected override void Draw(GameTime gameTime)
 	{
-		GraphicsDevice.Clear(Color.CornflowerBlue);
-
-		_spriteBatch.Begin();
-
-		const float topScreenScale = 0.235f;
-		_spriteBatch.DrawRectangle(0, 0, DisplayWidth, topScreenScale * DisplayHeight, Color.White, 5);
-
-		_spriteBatch.DrawRectangle(0, DisplayHeight - DisplayWidth, DisplayWidth, DisplayWidth, Color.White, 5);
-
-		const float radiusOffset = 50.0f;
-		_spriteBatch.DrawCircle(
-			DisplayWidth / 2.0f,
-			DisplayHeight - DisplayWidth / 2.0f,
-			DisplayWidth / 2.0f - radiusOffset,
-			50,
-			Color.White,
-			5
-		);
-
-		_spriteBatch.End();
-
+		SceneManager.Current?.OnRender(_spriteBatch, gameTime);
 		base.Draw(gameTime);
 	}
 
