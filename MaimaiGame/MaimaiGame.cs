@@ -48,6 +48,8 @@ public class MaimaiGame : Game
 		SetDisplayMode(DefaultDisplayWidth, DefaultDisplayHeight, false);
 		_lastKeyboardState = Keyboard.GetState();
 
+		Configuration.Initialise();
+
 		base.Initialize();
 
 		SceneManager.Push(new TouchScreenTestScene());
