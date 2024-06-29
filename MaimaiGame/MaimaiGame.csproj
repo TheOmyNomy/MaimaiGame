@@ -1,7 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Content/bin/**" />
+    <Compile Remove="Content/obj/**" />
+    <EmbeddedResource Remove="Content/bin/**" />
+    <EmbeddedResource Remove="Content/obj/**" />
+    <None Remove="Content/bin/**" />
+    <None Remove="Content/obj/**" />
+    <None Remove="Content/Content.mgcb" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MonoGame.Extended" Version="3.8.0" />
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303">

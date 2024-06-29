@@ -11,7 +11,7 @@ public class MaimaiGame : Game
 	// TODO: Using keyboard shortcuts to move the window to another display does not update the current adapter.
 
 	private readonly GraphicsDeviceManager _graphicsDeviceManager;
-	private SpriteBatch _spriteBatch;
+	private SpriteBatch _spriteBatch = null!;
 
 	private KeyboardState _lastKeyboardState;
 
@@ -22,9 +22,9 @@ public class MaimaiGame : Game
 	public int DisplayHeight => Window.ClientBounds.Height;
 	public bool IsFullscreen => _graphicsDeviceManager.IsFullScreen;
 
-	public EventHandler<DisplayModeChangedEventArgs> DisplayModeChanged;
+	public EventHandler<DisplayModeChangedEventArgs>? DisplayModeChanged;
 
-	public static MaimaiGame Instance { get; private set; }
+	public static MaimaiGame Instance { get; private set; } = null!;
 
 	public MaimaiGame()
 	{
@@ -54,6 +54,7 @@ public class MaimaiGame : Game
 	protected override void LoadContent()
 	{
 		_spriteBatch = new SpriteBatch(GraphicsDevice);
+		FontManager.Initialise(Content);
 	}
 
 	protected override void Update(GameTime gameTime)
