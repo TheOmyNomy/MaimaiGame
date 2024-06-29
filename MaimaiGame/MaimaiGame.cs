@@ -1,4 +1,5 @@
 ﻿using System;
+using MaimaiGame.Input;
 using MaimaiGame.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -49,6 +50,7 @@ public class MaimaiGame : Game
 		_lastKeyboardState = Keyboard.GetState();
 
 		Configuration.Initialise();
+		InputManager.Initialise();
 
 		base.Initialize();
 
