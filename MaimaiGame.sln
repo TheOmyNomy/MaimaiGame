@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaimaiGame", "MaimaiGame\MaimaiGame.csproj", "{49E1449C-4BD7-4D03-8EB7-00C7CFBE5CF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaimaiGame.WindowsDX", "MaimaiGame.WindowsDX\MaimaiGame.WindowsDX.csproj", "{DD2612BD-C07C-4C65-BE7F-5CD59DD7F3CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{49E1449C-4BD7-4D03-8EB7-00C7CFBE5CF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49E1449C-4BD7-4D03-8EB7-00C7CFBE5CF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49E1449C-4BD7-4D03-8EB7-00C7CFBE5CF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49E1449C-4BD7-4D03-8EB7-00C7CFBE5CF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD2612BD-C07C-4C65-BE7F-5CD59DD7F3CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD2612BD-C07C-4C65-BE7F-5CD59DD7F3CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD2612BD-C07C-4C65-BE7F-5CD59DD7F3CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD2612BD-C07C-4C65-BE7F-5CD59DD7F3CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
