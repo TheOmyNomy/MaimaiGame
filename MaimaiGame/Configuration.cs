@@ -6,6 +6,12 @@ namespace MaimaiGame;
 
 public class Configuration
 {
+	public ConfigurationAudio Audio { get; private set; } = new ConfigurationAudio
+	{
+		Offset = 0.1f,
+		Volume = 0.25f
+	};
+
 	public ConfigurationInput Input { get; private set; } = new ConfigurationInput
 	{
 		TouchScreen = new ConfigurationInputTouchScreen
@@ -44,6 +50,12 @@ public class Configuration
 			File.WriteAllText(path, contents);
 		}
 	}
+}
+
+public class ConfigurationAudio
+{
+	public float Offset { get; init; }
+	public float Volume { get; init; }
 }
 
 public class ConfigurationInput

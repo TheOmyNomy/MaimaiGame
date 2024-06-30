@@ -1,4 +1,5 @@
 ﻿using System;
+using MaimaiGame.Audio;
 using MaimaiGame.Input;
 using MaimaiGame.Scenes;
 using Microsoft.Xna.Framework;
@@ -52,6 +53,7 @@ public class MaimaiGame : Game
 		_lastKeyboardState = Keyboard.GetState();
 
 		Configuration.Initialise();
+		AudioManager.Initialise();
 		InputManager.Initialise();
 
 		base.Initialize();
@@ -62,7 +64,8 @@ public class MaimaiGame : Game
 		_spriteBatch = new SpriteBatch(GraphicsDevice);
 		FontManager.Initialise(Content);
 
-		SceneManager.Push(Content, new TouchScreenTestScene());
+		SceneManager.Push(Content, new PlayScene());
+		// SceneManager.Push(Content, new TouchScreenTestScene());
 	}
 
 	protected override void Update(GameTime gameTime)

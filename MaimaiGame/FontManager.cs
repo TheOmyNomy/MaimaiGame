@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MaimaiGame;
 
-public class FontManager
+public static class FontManager
 {
 	public static SpriteFont Tahoma12 { get; private set; } = null!;
 
