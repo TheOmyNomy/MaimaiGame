@@ -16,12 +16,14 @@ public class MaimaiGame : Game
 
 	private KeyboardState _lastKeyboardState;
 
-	public const int DefaultDisplayWidth = 720;
-	public const int DefaultDisplayHeight = 1280;
+	private const int DefaultDisplayWidth = 720;
+	private const int DefaultDisplayHeight = 1280;
 
 	public int DisplayWidth => Window.ClientBounds.Width;
 	public int DisplayHeight => Window.ClientBounds.Height;
 	public bool IsFullscreen => _graphicsDeviceManager.IsFullScreen;
+
+	public Rectangle PlayArea { get; private set; }
 
 	public EventHandler<DisplayModeChangedEventArgs>? DisplayModeChanged;
 
@@ -53,14 +55,14 @@ public class MaimaiGame : Game
 		InputManager.Initialise();
 
 		base.Initialize();
-
-		SceneManager.Push(new TouchScreenTestScene());
 	}
 
 	protected override void LoadContent()
 	{
 		_spriteBatch = new SpriteBatch(GraphicsDevice);
 		FontManager.Initialise(Content);
+
+		SceneManager.Push(Content, new TouchScreenTestScene());
 	}
 
 	protected override void Update(GameTime gameTime)
@@ -99,6 +101,10 @@ public class MaimaiGame : Game
 
 		GraphicsDevice.Viewport = new Viewport(0, 0, width, height);
 		GraphicsDevice.ScissorRectangle = new Rectangle(0, 0, width, height);
+
+		// The play area is slightly smaller than the width of the screen, so we need account for it.
+		const int spacing = 25, spacing2x = spacing * 2;
+		PlayArea = new Rectangle(spacing, height - width + spacing, width - spacing2x, width - spacing2x);
 
 		try
 		{

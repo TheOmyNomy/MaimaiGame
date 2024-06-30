@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MaimaiGame.Scenes;
@@ -7,7 +8,7 @@ public abstract class Scene
 {
 	public Scene() { }
 
-	public virtual void OnCreate() { }
+	public virtual void OnCreate(ContentManager contentManager) { }
 	public virtual void OnEnter() { }
 	public virtual void OnLeave() { }
 	public virtual void OnDestroy() { }

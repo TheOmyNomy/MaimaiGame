@@ -23,10 +23,17 @@ public class TouchScreen
 		_serialPort = new SerialPort(portName, baudRate, parity, dataBits, stopBits);
 		_serialPort.DataReceived += OnDataReceived;
 
-		_serialPort.Open();
+		try
+		{
+			_serialPort.Open();
 
-		byte[] readCommand = Encoding.UTF8.GetBytes("{RSAT}");
-		_serialPort.Write(readCommand, 0, readCommand.Length);
+			byte[] readCommand = Encoding.UTF8.GetBytes("{RSAT}");
+			_serialPort.Write(readCommand, 0, readCommand.Length);
+		}
+		catch (Exception e)
+		{
+			Console.WriteLine(e);
+		}
 	}
 
 	private void OnDataReceived(object sender, SerialDataReceivedEventArgs e)

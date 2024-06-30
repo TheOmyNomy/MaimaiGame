@@ -16,6 +16,6 @@ public class FontManager
 
 		_initialised = true;
 
-		Tahoma12 = contentManager.Load<SpriteFont>("Fonts/tahoma_12");
+		Tahoma12 = contentManager.Load<SpriteFont>("Fonts/Tahoma12");
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Content;
 
 namespace MaimaiGame.Scenes;
 
@@ -12,12 +13,12 @@ public static class SceneManager
 	public static int Count => Scenes.Count;
 
 
-	public static void Push(Scene scene)
+	public static void Push(ContentManager contentManager, Scene scene)
 	{
 		Current?.OnLeave();
 		Scenes.Push(scene);
 
-		Current!.OnCreate();
+		Current!.OnCreate(contentManager);
 		Current!.OnEnter();
 	}
 
