@@ -15,8 +15,6 @@ public class MaimaiGame : Game
 	private readonly GraphicsDeviceManager _graphicsDeviceManager;
 	private SpriteBatch _spriteBatch = null!;
 
-	private KeyboardState _lastKeyboardState;
-
 	private const int DefaultDisplayWidth = 720;
 	private const int DefaultDisplayHeight = 1280;
 
@@ -50,7 +48,6 @@ public class MaimaiGame : Game
 	protected override void Initialize()
 	{
 		SetDisplayMode(DefaultDisplayWidth, DefaultDisplayHeight, false);
-		_lastKeyboardState = Keyboard.GetState();
 
 		Configuration.Initialise();
 		AudioManager.Initialise();
@@ -65,19 +62,19 @@ public class MaimaiGame : Game
 		FontManager.Initialise(Content);
 
 		SceneManager.Push(Content, new PlayScene());
-		// SceneManager.Push(Content, new TouchScreenTestScene());
 	}
 
 	protected override void Update(GameTime gameTime)
 	{
-		KeyboardState keyboardState = Keyboard.GetState();
-
-		if (keyboardState.IsKeyDown(Keys.F) && !_lastKeyboardState.IsKeyDown(Keys.F))
+		if (Keyboard.GetState().IsKeyPressed(Keys.F))
 			SetDisplayMode(DefaultDisplayWidth, DefaultDisplayHeight, !IsFullscreen);
 
-		_lastKeyboardState = keyboardState;
+		if (Keyboard.GetState().IsKeyPressed(Keys.T) && SceneManager.Current is not TouchScreenTestScene)
+			SceneManager.Push(Content, new TouchScreenTestScene());
 
 		SceneManager.Current?.OnUpdate(gameTime);
+
+		KeyboardStateExtensions.Update();
 		base.Update(gameTime);
 	}
 

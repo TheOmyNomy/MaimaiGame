@@ -8,16 +8,17 @@ namespace MaimaiGame.Scenes;
 
 public class PlayScene : Scene
 {
-	private KeyboardState _lastKeyboardState;
-
 	private Music _music = null!;
 
 	public override void OnCreate(ContentManager contentManager)
 	{
 		_music = Music.Load("Resources/music.mp3");
 		_music.Play();
+	}
 
-		_lastKeyboardState = Keyboard.GetState();
+	public override void OnLeave()
+	{
+		_music.Pause();
 	}
 
 	public override void OnDestroy()
@@ -27,9 +28,7 @@ public class PlayScene : Scene
 
 	public override void OnUpdate(GameTime gameTime)
 	{
-		KeyboardState keyboardState = Keyboard.GetState();
-
-		if (keyboardState.IsKeyDown(Keys.P) && !_lastKeyboardState.IsKeyDown(Keys.P))
+		if (Keyboard.GetState().IsKeyPressed(Keys.P))
 		{
 			if (_music.IsPlaying)
 				_music.Pause();
@@ -37,10 +36,8 @@ public class PlayScene : Scene
 				_music.Play();
 		}
 
-		if (keyboardState.IsKeyDown(Keys.R) && !_lastKeyboardState.IsKeyDown(Keys.R))
+		if (Keyboard.GetState().IsKeyPressed(Keys.R))
 			_music.Play(true);
-
-		_lastKeyboardState = keyboardState;
 	}
 
 	public override void OnRender(SpriteBatch spriteBatch, GameTime gameTime)
@@ -48,6 +45,38 @@ public class PlayScene : Scene
 		spriteBatch.GraphicsDevice.Clear(Color.Black);
 
 		spriteBatch.Begin();
+
+		/* const float topScreenScale = 0.235f;
+		spriteBatch.DrawRectangle(
+			0,
+			0,
+			MaimaiGame.Instance.DisplayWidth,
+			topScreenScale * MaimaiGame.Instance.DisplayHeight,
+			Color.White,
+			5
+		);
+
+		spriteBatch.DrawRectangle(
+			0,
+			MaimaiGame.Instance.DisplayHeight - MaimaiGame.Instance.DisplayWidth,
+			MaimaiGame.Instance.DisplayWidth,
+			MaimaiGame.Instance.DisplayWidth,
+			Color.White,
+			5
+		);
+
+		const float radiusOffset = 50.0f;
+		spriteBatch.DrawCircle(
+			MaimaiGame.Instance.DisplayWidth / 2.0f,
+			MaimaiGame.Instance.DisplayHeight - MaimaiGame.Instance.DisplayWidth / 2.0f,
+			MaimaiGame.Instance.DisplayWidth / 2.0f - radiusOffset,
+			50,
+			Color.White,
+			5
+		);
+
+		float fps = 1.0f / (float) gameTime.ElapsedGameTime.TotalSeconds;
+		spriteBatch.DrawString(FontManager.Tahoma12, $"{fps:N0}fps", new Vector2(7.0f, 4.0f), Color.White); */
 
 		spriteBatch.DrawString(
 			FontManager.Tahoma12,
