@@ -20,14 +20,8 @@ public class Music : IDisposable
 
 	public float Volume
 	{
-		get
-		{
-			return (float) Math.Clamp(
-				Math.Round(Bass.ChannelGetAttribute(_handle, ChannelAttribute.Volume), 4),
-				0.0f,
-				1.0f
-			);
-		}
+		get => (float) Math.Clamp(Math.Round(Bass.ChannelGetAttribute(_handle, ChannelAttribute.Volume), 4), 0.0f,
+			1.0f);
 		set
 		{
 			value = (float) Math.Clamp(Math.Round(value, 4), 0.0f, 1.0f);
@@ -45,28 +39,21 @@ public class Music : IDisposable
 	public void Play(bool restart = false)
 	{
 		bool result = Bass.ChannelPlay(_handle, restart);
-
-		if (!result)
-			throw new Exception(Bass.LastError.ToString());
+		Logger.Assert(result, $"\"Play()\" failed with error code \"{Bass.LastError.ToString()}\"");
 	}
 
 	public void Pause()
 	{
 		bool result = Bass.ChannelPause(_handle);
-
-		if (!result)
-			throw new Exception(Bass.LastError.ToString());
+		Logger.Assert(result, $"\"Pause()\" failed with error code \"{Bass.LastError.ToString()}\"");
 	}
 
 	public static Music Load(string path)
 	{
-		if (!File.Exists(path))
-			throw new Exception($"File \"{path}\" doesn't exist.");
+		Logger.Assert(File.Exists(path), $"File \"{path}\" does not exist.");
 
 		int handle = Bass.CreateStream(path);
-
-		if (handle == 0)
-			throw new Exception(Bass.LastError.ToString());
+		Logger.Assert(handle != 0, $"\"Load()\" failed with error code \"{Bass.LastError.ToString()}\"");
 
 		return new Music(handle);
 	}

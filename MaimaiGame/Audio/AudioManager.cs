@@ -29,8 +29,7 @@ public static class AudioManager
 
 		_initialised = true;
 
-		if (!Bass.Init())
-			throw new Exception(Bass.LastError.ToString());
+		Logger.Assert(Bass.Init(), $"\"Initialise()\" failed with error code \"{Bass.LastError.ToString()}\"");
 
 		Offset = Configuration.Instance.Audio.Offset;
 		Volume = Configuration.Instance.Audio.Volume;

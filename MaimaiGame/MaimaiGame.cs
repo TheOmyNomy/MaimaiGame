@@ -50,6 +50,7 @@ public class MaimaiGame : Game
 		SetDisplayMode(DefaultDisplayWidth, DefaultDisplayHeight, false);
 
 		Configuration.Initialise();
+		Logger.Initialise();
 		AudioManager.Initialise();
 		InputManager.Initialise();
 
@@ -82,6 +83,12 @@ public class MaimaiGame : Game
 	{
 		SceneManager.Current?.OnRender(_spriteBatch, gameTime);
 		base.Draw(gameTime);
+	}
+
+	protected override void OnExiting(object sender, EventArgs args)
+	{
+		SceneManager.Clear();
+		base.OnExiting(sender, args);
 	}
 
 	public void SetDisplayMode(int width, int height, bool fullscreen)

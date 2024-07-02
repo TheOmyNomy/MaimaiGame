@@ -6,6 +6,8 @@ namespace MaimaiGame;
 
 public class Configuration
 {
+	public LogLevel LogLevel { get; private set; } = LogLevel.Error;
+
 	public ConfigurationAudio Audio { get; private set; } = new ConfigurationAudio
 	{
 		Offset = 0.1f,

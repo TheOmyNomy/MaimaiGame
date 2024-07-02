@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content;
 
 namespace MaimaiGame.Scenes;
@@ -25,7 +24,10 @@ public static class SceneManager
 	public static void Pop()
 	{
 		if (Count == 0)
-			throw new Exception();
+		{
+			Logger.Error("There are no scenes to pop!");
+			return;
+		}
 
 		Current!.OnLeave();
 		Current!.OnDestroy();
