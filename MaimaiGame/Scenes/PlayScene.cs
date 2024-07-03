@@ -1,4 +1,5 @@
 ﻿using MaimaiGame.Audio;
+using MaimaiGame.Charts;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,10 +9,24 @@ namespace MaimaiGame.Scenes;
 
 public class PlayScene : Scene
 {
+	private Chart _chart = null!;
+	private Difficulty _difficulty = null!;
+
 	private Music _music = null!;
 
 	public override void OnCreate(ContentManager contentManager)
 	{
+		Chart? chart = Chart.Load("Resources/Chart");
+
+		if (chart == null || chart.Master == null)
+		{
+			MaimaiGame.Instance.Exit();
+			return;
+		}
+
+		_chart = chart;
+		_difficulty = _chart.Master;
+
 		_music = Music.Load("Resources/music.mp3");
 		_music.Play();
 	}
@@ -84,6 +99,14 @@ public class PlayScene : Scene
 			new Vector2(2.0f, 2.0f),
 			Color.White
 		);
+
+		// TODO: Need a localised sprite font (see: https://stackoverflow.com/a/35300034)
+		/* spriteBatch.DrawString(
+			FontManager.Tahoma12,
+			$"Chart: {_chart.Artist} - {_chart.Title} ({_difficulty.Designer}) [{_difficulty.Name} ({_difficulty.Level})]",
+			new Vector2(2.0f, 17.0f),
+			Color.White
+		); */
 
 		spriteBatch.End();
 	}
