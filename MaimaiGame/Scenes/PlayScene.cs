@@ -14,12 +14,23 @@ public class PlayScene : Scene
 
 	private Music _music = null!;
 
-	private Texture2D _bgImage;
-	private Rectangle _bgImageRect;
+	private Texture2D _bgImage = null!;
+	private Rectangle _backgroundImageRect;
 	private Color _bgImageColour;
+
+	private Texture2D _vignetteImage = null!;
+	private Texture2D _ringImage = null!;
 
 	public override void OnCreate(ContentManager contentManager)
 	{
+		void UpdateBackgroundImageRect()
+		{
+			int height = (int) (_bgImage.Height / (float) _bgImage.Width * MaimaiGame.Instance.BottomDisplayArea.Width);
+
+			_backgroundImageRect = new Rectangle(MaimaiGame.Instance.BottomDisplayArea.Left,
+				MaimaiGame.Instance.BottomDisplayArea.Top, MaimaiGame.Instance.BottomDisplayArea.Width, height);
+		}
+
 		Chart? chart = Chart.Load("Resources/Chart");
 
 		if (chart == null || chart.Master == null)
@@ -38,13 +49,14 @@ public class PlayScene : Scene
 			? Texture2D.FromFile(MaimaiGame.Instance.GraphicsDevice, _chart.BgImagePath)
 			: contentManager.Load<Texture2D>("Images/DefaultBackground");
 
-		int height = (int) (_bgImage.Height / (float) _bgImage.Width) * MaimaiGame.Instance.PlayArea.Width;
-
-		_bgImageRect = new Rectangle(MaimaiGame.Instance.PlayArea.Left, MaimaiGame.Instance.PlayArea.Top,
-			MaimaiGame.Instance.PlayArea.Width, height);
-
 		const float dimValue = 0.5f;
 		_bgImageColour = new Color(dimValue, dimValue, dimValue, 1.0f);
+
+		_vignetteImage = contentManager.Load<Texture2D>("Images/Vignette");
+		_ringImage = contentManager.Load<Texture2D>("Images/Skin/Ring");
+
+		MaimaiGame.Instance.DisplayModeChanged += (_, _) => UpdateBackgroundImageRect();
+		UpdateBackgroundImageRect();
 	}
 
 	public override void OnLeave()
@@ -125,7 +137,9 @@ public class PlayScene : Scene
 		); */
 
 
-		spriteBatch.Draw(_bgImage, _bgImageRect, null, _bgImageColour);
+		spriteBatch.Draw(_bgImage, _backgroundImageRect, null, _bgImageColour);
+		spriteBatch.Draw(_ringImage, MaimaiGame.Instance.BottomDisplayArea, null, Color.White);
+		spriteBatch.Draw(_vignetteImage, MaimaiGame.Instance.BottomDisplayArea, null, Color.White);
 
 		spriteBatch.End();
 	}

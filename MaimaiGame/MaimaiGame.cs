@@ -22,7 +22,8 @@ public class MaimaiGame : Game
 	public int DisplayHeight => Window.ClientBounds.Height;
 	public bool IsFullscreen => _graphicsDeviceManager.IsFullScreen;
 
-	public Rectangle PlayArea { get; private set; }
+	public Rectangle BottomDisplayArea { get; private set; }
+	public Rectangle BottomDisplayPlayArea { get; private set; }
 
 	public EventHandler<DisplayModeChangedEventArgs>? DisplayModeChanged;
 
@@ -109,9 +110,13 @@ public class MaimaiGame : Game
 		GraphicsDevice.Viewport = new Viewport(0, 0, width, height);
 		GraphicsDevice.ScissorRectangle = new Rectangle(0, 0, width, height);
 
+		BottomDisplayArea = new Rectangle(0, height - width, width, width);
+
 		// The play area is slightly smaller than the width of the screen, so we need account for it.
-		const int spacing = 25, spacing2x = spacing * 2;
-		PlayArea = new Rectangle(spacing, height - width + spacing, width - spacing2x, width - spacing2x);
+		const int spacing = 40, spacing2x = spacing * 2;
+
+		BottomDisplayPlayArea = new Rectangle(BottomDisplayArea.Left + spacing, BottomDisplayArea.Top + spacing,
+			BottomDisplayArea.Width - spacing2x, BottomDisplayArea.Width - spacing2x);
 
 		try
 		{
