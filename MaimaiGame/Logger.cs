@@ -55,8 +55,6 @@ public static class Logger
 		foreach (object arg in args)
 			builder.Append(arg);
 
-		builder.AppendLine();
-
 		return builder.ToString();
 	}
 }
