@@ -73,8 +73,6 @@ public class Difficulty
 		int currentDivisor = 4, divisor;
 		float currentTime = Offset ?? 0.0f;
 
-		Logger.Debug($"Current Time: {currentTime:N4}");
-
 		while (enumerator.Peek() != null)
 		{
 			enumerator.Take();
@@ -85,10 +83,7 @@ public class Difficulty
 				currentDivisor = divisor;
 
 			if (enumerator.Current == ',')
-			{
 				currentTime += 60.0f / currentBpm * 4.0f / currentDivisor;
-				Logger.Debug($"Current Time: {currentTime:N4}");
-			}
 		}
 
 		return true;

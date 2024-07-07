@@ -14,6 +14,10 @@ public class PlayScene : Scene
 
 	private Music _music = null!;
 
+	private Texture2D _bgImage;
+	private Rectangle _bgImageRect;
+	private Color _bgImageColour;
+
 	public override void OnCreate(ContentManager contentManager)
 	{
 		Chart? chart = Chart.Load("Resources/Chart");
@@ -27,8 +31,20 @@ public class PlayScene : Scene
 		_chart = chart;
 		_difficulty = _chart.Master;
 
-		_music = Music.Load("Resources/music.mp3");
+		_music = Music.Load(_chart.MusicPath);
 		_music.Play();
+
+		_bgImage = !string.IsNullOrWhiteSpace(_chart.BgImagePath)
+			? Texture2D.FromFile(MaimaiGame.Instance.GraphicsDevice, _chart.BgImagePath)
+			: contentManager.Load<Texture2D>("Images/DefaultBackground");
+
+		int height = (int) (_bgImage.Height / (float) _bgImage.Width) * MaimaiGame.Instance.PlayArea.Width;
+
+		_bgImageRect = new Rectangle(MaimaiGame.Instance.PlayArea.Left, MaimaiGame.Instance.PlayArea.Top,
+			MaimaiGame.Instance.PlayArea.Width, height);
+
+		const float dimValue = 0.5f;
+		_bgImageColour = new Color(dimValue, dimValue, dimValue, 1.0f);
 	}
 
 	public override void OnLeave()
@@ -107,6 +123,9 @@ public class PlayScene : Scene
 			new Vector2(2.0f, 17.0f),
 			Color.White
 		); */
+
+
+		spriteBatch.Draw(_bgImage, _bgImageRect, null, _bgImageColour);
 
 		spriteBatch.End();
 	}

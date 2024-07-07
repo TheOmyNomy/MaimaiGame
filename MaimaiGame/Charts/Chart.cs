@@ -22,11 +22,19 @@ public class Chart
 	public Difficulty? ReMaster => _difficulties.GetValueOrDefault(DifficultyCategory.ReMaster);
 	public Difficulty? Original => _difficulties.GetValueOrDefault(DifficultyCategory.Original);
 
+	public readonly string MusicPath;
+	public readonly string? BgImagePath;
+
 	public readonly string Path;
 
 	private Chart(string path)
 	{
 		Path = path;
+
+		MusicPath = path + "track.mp3";
+
+		// TODO: Check for multiple image file extensions
+		BgImagePath = path + "bg.jpg";
 	}
 
 	public static Chart? Load(string path)
