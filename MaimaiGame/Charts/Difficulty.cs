@@ -1,11 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MaimaiGame.Charts.Objects;
 
 namespace MaimaiGame.Charts;
 
 public class Difficulty
 {
+	private static readonly char[] NoteSeparators = new[] { ',', '/', '`' };
+
+	private readonly List<BaseObject> _objects = new List<BaseObject>();
+	public IReadOnlyList<BaseObject> Objects => _objects;
+
 	public string? ShortMessage { get; private set; }
 	public string? Designer { get; private set; }
 	public float? Offset { get; private set; }
@@ -66,13 +73,15 @@ public class Difficulty
 
 		int currentBpm, bpm;
 
-		if (!TryParseBpm(enumerator, out bpm))
+		if (!TryParseBpm(enumerator, out bpm, false))
 			throw new Exception("Bpm must be set at the beginning");
 
 		currentBpm = bpm;
 
 		int currentDivisor = 4, divisor;
 		float currentTime = Offset ?? 0.0f;
+
+		List<BaseObject> objects = new List<BaseObject>();
 
 		while (enumerator.Peek() != null)
 		{
@@ -83,8 +92,22 @@ public class Difficulty
 			else if (TryParseDivisor(enumerator, out divisor))
 				currentDivisor = divisor;
 
+			if (!TryParseTap(enumerator, currentTime, objects))
+				Logger.Error($"Unknown token \"{enumerator.Current}\"");
+
 			if (enumerator.Current == ',')
+			{
+				if (objects.Count > 1)
+				{
+					foreach (BaseObject baseObject in objects)
+						baseObject.Modifiers |= Modifiers.Each;
+				}
+
+				_objects.AddRange(objects);
+				objects.Clear();
+
 				currentTime += 60.0f / currentBpm * 4.0f / currentDivisor;
+			}
 		}
 
 		return true;
@@ -125,6 +148,51 @@ public class Difficulty
 		result = bpm;
 
 		enumerator.Take();
+		return true;
+	}
+
+	private bool TryParseTap(CustomCharEnumerator enumerator, float time, List<BaseObject> objects)
+	{
+		if (!Position.TryParseIndex(enumerator.Current, out int index))
+			return false;
+
+		Position? position = Position.GetPositionOrDefault('R', index);
+
+		if (position == null)
+			return false;
+
+		enumerator.Take();
+
+		Tap tap = new Tap(time, position);
+		objects.Add(tap);
+
+		if (Position.TryParseIndex(enumerator.Current, out int secondIndex))
+		{
+			Position? secondPosition = Position.GetPositionOrDefault('R', secondIndex);
+
+			if (secondPosition == null)
+				throw new Exception();
+
+			tap.Modifiers = Modifiers.Each;
+
+			Tap secondTap = new Tap(time, secondPosition, Modifiers.Each);
+			objects.Add(secondTap);
+
+			enumerator.Take();
+
+			return true;
+		}
+
+		while (!NoteSeparators.Contains(enumerator.Current))
+		{
+			if (enumerator.Current == 'b')
+				tap.Modifiers |= Modifiers.Break;
+			else if (enumerator.Current == 'x')
+				tap.Modifiers |= Modifiers.Ex;
+
+			enumerator.Take();
+		}
+
 		return true;
 	}
 

@@ -18,8 +18,12 @@ public class PlayScene : Scene
 	private Rectangle _backgroundImageRect;
 	private Color _bgImageColour;
 
+	private float _renderDuration;
+
 	public override void OnCreate(ContentManager contentManager)
 	{
+		_renderDuration = 140.0f / (Configuration.Instance.Gameplay.NoteSpeed + 1.0f) / 30.0f;
+
 		void UpdateBackgroundImageRect()
 		{
 			int height = (int) (_bgImage.Height / (float) _bgImage.Width * MaimaiGame.Instance.BottomDisplayArea.Width);
@@ -52,6 +56,9 @@ public class PlayScene : Scene
 		MaimaiGame.Instance.DisplayModeChanged += (_, _) =>
 		{
 			UpdateBackgroundImageRect();
+
+			for (int i = _difficulty.Objects.Count - 1; i >= 0; i--)
+				_difficulty.Objects[i].OnDisplayModeChanged();
 		};
 
 		UpdateBackgroundImageRect();
@@ -79,6 +86,9 @@ public class PlayScene : Scene
 
 		if (Keyboard.GetState().IsKeyPressed(Keys.R))
 			_music.Play(true);
+
+		for (int i = _difficulty.Objects.Count - 1; i >= 0; i--)
+			_difficulty.Objects[i].OnUpdate(_music.CurrentTime);
 	}
 
 	public override void OnRender(SpriteBatch spriteBatch, GameTime gameTime)
@@ -137,6 +147,10 @@ public class PlayScene : Scene
 
 		spriteBatch.Draw(_bgImage, _backgroundImageRect, null, _bgImageColour);
 		spriteBatch.Draw(TextureManager.RingBase, MaimaiGame.Instance.BottomDisplayArea, null, Color.White);
+
+		for (int i = _difficulty.Objects.Count - 1; i >= 0; i--)
+			_difficulty.Objects[i].OnRender(spriteBatch, _music.CurrentTime, _renderDuration);
+
 		spriteBatch.Draw(TextureManager.Vignette, MaimaiGame.Instance.BottomDisplayArea, null, Color.White);
 
 		spriteBatch.End();

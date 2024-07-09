@@ -14,6 +14,11 @@ public class Configuration
 		Volume = 0.25f
 	};
 
+	public ConfigurationGameplay Gameplay { get; private set; } = new ConfigurationGameplay
+	{
+		NoteSpeed = 7.5f
+	};
+
 	public ConfigurationInput Input { get; private set; } = new ConfigurationInput
 	{
 		TouchScreen = new ConfigurationInputTouchScreen
@@ -58,6 +63,11 @@ public class ConfigurationAudio
 {
 	public float Offset { get; init; }
 	public float Volume { get; init; }
+}
+
+public class ConfigurationGameplay
+{
+	public float NoteSpeed { get; init; }
 }
 
 public class ConfigurationInput
