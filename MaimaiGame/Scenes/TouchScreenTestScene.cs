@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using MaimaiGame.Charts;
 using MaimaiGame.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended;
 
 namespace MaimaiGame.Scenes;
 
@@ -37,14 +35,14 @@ public class TouchScreenTestScene : Scene
 
 		spriteBatch.Begin();
 
-		spriteBatch.Draw(_baseImage, MaimaiGame.Instance.BottomDisplayPlayArea, Color.White);
+		spriteBatch.Draw(_baseImage, MaimaiGame.Instance.BottomDisplayArea, Color.White);
 
 		foreach (var item in _sensorImages)
 		{
 			if (!InputManager.TouchScreen.Sensors[item.Key])
 				continue;
 
-			spriteBatch.Draw(item.Value, MaimaiGame.Instance.BottomDisplayPlayArea, Color.White);
+			spriteBatch.Draw(item.Value, MaimaiGame.Instance.BottomDisplayArea, Color.White);
 		}
 
 		/* float startingAngle = MathHelper.ToRadians(360.0f / 16.0f);
@@ -79,7 +77,7 @@ public class TouchScreenTestScene : Scene
 			i++;
 		} */
 
-		foreach (Position position in Position.Values)
+		/* foreach (Position position in Position.Values)
 		{
 			float x = MaimaiGame.Instance.BottomDisplayPlayArea.X +
 			          position.X * MaimaiGame.Instance.BottomDisplayPlayArea.Width;
@@ -88,7 +86,7 @@ public class TouchScreenTestScene : Scene
 			          position.Y * MaimaiGame.Instance.BottomDisplayPlayArea.Height;
 
 			spriteBatch.DrawCircle(x, y, 5.0f, 100, Color.LimeGreen, 5.0f);
-		}
+		} */
 
 		spriteBatch.End();
 	}
