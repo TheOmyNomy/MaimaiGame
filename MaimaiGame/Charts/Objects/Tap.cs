@@ -57,7 +57,7 @@ public sealed class Tap : BaseObject
 		// for the highest resolution we intend to support (2160x3840).
 		// ... but we'll deal with that later :)
 
-		const float startOffset = 0.22f;
+		const float startOffset = 0.275f;
 		_startPosition = _centrePosition + (_destinationPosition - _centrePosition) * startOffset;
 
 		_origin = new Vector2(_image.Width / 2.0f, _image.Height / 2.0f);
