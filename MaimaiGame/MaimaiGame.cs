@@ -75,7 +75,7 @@ public class MaimaiGame : Game
 		if (Keyboard.GetState().IsKeyPressed(Keys.F))
 		{
 			if (IsFullscreen)
-				SetDisplayMode(DisplayWidth, DisplayHeight, false);
+				SetDisplayMode(DefaultDisplayWidth, DefaultDisplayHeight, false);
 			else
 				SetDisplayMode(GraphicsDevice.Adapter.CurrentDisplayMode.Width,
 					GraphicsDevice.Adapter.CurrentDisplayMode.Height, true);
