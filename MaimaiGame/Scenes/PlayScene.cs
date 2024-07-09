@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
 
 namespace MaimaiGame.Scenes;
 
@@ -152,6 +153,14 @@ public class PlayScene : Scene
 			_difficulty.Objects[i].OnRender(spriteBatch, _music.CurrentTime, _renderDuration);
 
 		spriteBatch.Draw(TextureManager.Vignette, MaimaiGame.Instance.BottomDisplayArea, null, Color.White);
+
+		// Temporary rect to hide notes outside / above the play area.
+		const float rectHeight = 150.0f, rectThickness = rectHeight / 2.0f;
+
+		spriteBatch.DrawRectangle(MaimaiGame.Instance.BottomDisplayArea.X,
+			MaimaiGame.Instance.BottomDisplayArea.Y - rectHeight, MaimaiGame.Instance.BottomDisplayArea.Width,
+			rectHeight,
+			Color.Black, rectThickness);
 
 		spriteBatch.End();
 	}
