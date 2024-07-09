@@ -11,6 +11,7 @@ namespace MaimaiGame;
 public class MaimaiGame : Game
 {
 	// TODO: Using keyboard shortcuts to move the window to another display does not update the current adapter.
+	// TODO: MonoGame doesn't update display resolution after launch (can change in Windows but MonoGame won't know).
 
 	private readonly GraphicsDeviceManager _graphicsDeviceManager;
 	private SpriteBatch _spriteBatch = null!;
@@ -72,7 +73,13 @@ public class MaimaiGame : Game
 	protected override void Update(GameTime gameTime)
 	{
 		if (Keyboard.GetState().IsKeyPressed(Keys.F))
-			SetDisplayMode(DefaultDisplayWidth, DefaultDisplayHeight, !IsFullscreen);
+		{
+			if (IsFullscreen)
+				SetDisplayMode(DisplayWidth, DisplayHeight, false);
+			else
+				SetDisplayMode(GraphicsDevice.Adapter.CurrentDisplayMode.Width,
+					GraphicsDevice.Adapter.CurrentDisplayMode.Height, true);
+		}
 
 		if (Keyboard.GetState().IsKeyPressed(Keys.T) && SceneManager.Current is not TouchScreenTestScene)
 			SceneManager.Push(Content, new TouchScreenTestScene());
