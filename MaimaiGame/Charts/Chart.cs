@@ -173,7 +173,7 @@ public class Chart
 
 			if (!result)
 			{
-				Logger.Error($"Failed to load note data for difficulty \"{item.Key.Name}\"");
+				Logger.Error($"Failed to load note data for difficulty \"{item.Key.Category}\"");
 				return null;
 			}
 		}

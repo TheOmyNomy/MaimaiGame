@@ -11,11 +11,12 @@ public class Difficulty
 	public float? Offset { get; private set; }
 	public string? Level { get; private set; }
 
-	public readonly string Name;
+
+	public readonly string Category;
 
 	public Difficulty(DifficultyCategory category)
 	{
-		Name = category.ToString();
+		Category = category.ToString();
 	}
 
 	public bool Parse(string name, object value)

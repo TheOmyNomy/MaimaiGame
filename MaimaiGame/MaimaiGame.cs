@@ -15,8 +15,8 @@ public class MaimaiGame : Game
 	private readonly GraphicsDeviceManager _graphicsDeviceManager;
 	private SpriteBatch _spriteBatch = null!;
 
-	private const int DefaultDisplayWidth = 720;
-	private const int DefaultDisplayHeight = 1280;
+	public const int DefaultDisplayWidth = 720;
+	public const int DefaultDisplayHeight = 1280;
 
 	public int DisplayWidth => Window.ClientBounds.Width;
 	public int DisplayHeight => Window.ClientBounds.Height;
@@ -62,6 +62,7 @@ public class MaimaiGame : Game
 	{
 		_spriteBatch = new SpriteBatch(GraphicsDevice);
 		FontManager.Initialise(Content);
+		TextureManager.Initialise(Content);
 
 		SceneManager.Push(Content, new PlayScene());
 	}

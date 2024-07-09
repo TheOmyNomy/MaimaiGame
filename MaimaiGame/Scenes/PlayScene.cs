@@ -18,9 +18,6 @@ public class PlayScene : Scene
 	private Rectangle _backgroundImageRect;
 	private Color _bgImageColour;
 
-	private Texture2D _vignetteImage = null!;
-	private Texture2D _ringImage = null!;
-
 	public override void OnCreate(ContentManager contentManager)
 	{
 		void UpdateBackgroundImageRect()
@@ -47,15 +44,16 @@ public class PlayScene : Scene
 
 		_bgImage = !string.IsNullOrWhiteSpace(_chart.BgImagePath)
 			? Texture2D.FromFile(MaimaiGame.Instance.GraphicsDevice, _chart.BgImagePath)
-			: contentManager.Load<Texture2D>("Images/DefaultBackground");
+			: TextureManager.DefaultBackground;
 
 		const float dimValue = 0.5f;
 		_bgImageColour = new Color(dimValue, dimValue, dimValue, 1.0f);
 
-		_vignetteImage = contentManager.Load<Texture2D>("Images/Vignette");
-		_ringImage = contentManager.Load<Texture2D>("Images/Skin/Ring");
+		MaimaiGame.Instance.DisplayModeChanged += (_, _) =>
+		{
+			UpdateBackgroundImageRect();
+		};
 
-		MaimaiGame.Instance.DisplayModeChanged += (_, _) => UpdateBackgroundImageRect();
 		UpdateBackgroundImageRect();
 	}
 
@@ -138,8 +136,8 @@ public class PlayScene : Scene
 
 
 		spriteBatch.Draw(_bgImage, _backgroundImageRect, null, _bgImageColour);
-		spriteBatch.Draw(_ringImage, MaimaiGame.Instance.BottomDisplayArea, null, Color.White);
-		spriteBatch.Draw(_vignetteImage, MaimaiGame.Instance.BottomDisplayArea, null, Color.White);
+		spriteBatch.Draw(TextureManager.RingBase, MaimaiGame.Instance.BottomDisplayArea, null, Color.White);
+		spriteBatch.Draw(TextureManager.Vignette, MaimaiGame.Instance.BottomDisplayArea, null, Color.White);
 
 		spriteBatch.End();
 	}
