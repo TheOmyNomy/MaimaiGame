@@ -64,8 +64,8 @@ public sealed class Tap : BaseObject
 		_scale = 0.075f * MaimaiGame.Instance.DisplayScale;
 
 		_ringOrigin = new Vector2(_ringImage.Width / 2.0f, 120.0f * MaimaiGame.Instance.DisplayScale);
-		_minimumRingScale = 0.078f * MaimaiGame.Instance.DisplayScale;
-		_maximumRingScale = 0.36f * MaimaiGame.Instance.DisplayScale;
+		_minimumRingScale = 0.09f * MaimaiGame.Instance.DisplayScale;
+		_maximumRingScale = 0.335f * MaimaiGame.Instance.DisplayScale;
 
 		_rotation = (float) Math.Atan2(_destinationPosition.Y - _startPosition.Y,
 			_destinationPosition.X - _startPosition.X) + MathHelper.ToRadians(90);
