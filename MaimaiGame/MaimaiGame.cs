@@ -19,7 +19,7 @@ public class MaimaiGame : Game
 	public const int DefaultDisplayWidth = 720;
 	public const int DefaultDisplayHeight = 1280;
 
-	public float DisplayScale { get; private set; }
+	public float DisplayScale { get; private set; } = 1.0f;
 
 	public int DisplayWidth => Window.ClientBounds.Width;
 	public int DisplayHeight => Window.ClientBounds.Height;
@@ -120,7 +120,7 @@ public class MaimaiGame : Game
 		GraphicsDevice.Viewport = new Viewport(0, 0, width, height);
 		GraphicsDevice.ScissorRectangle = new Rectangle(0, 0, width, height);
 
-		DisplayScale = Instance.DisplayWidth / (float) DefaultDisplayWidth;
+		DisplayScale = width / (float) DefaultDisplayWidth;
 
 		BottomDisplayArea = new Rectangle(0, height - width, width, width);
 
